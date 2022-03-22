@@ -3,10 +3,16 @@ package com.felipeshonorato.spring.forum.model.controller.form;
 import com.felipeshonorato.spring.forum.model.modelo.Curso;
 import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import com.felipeshonorato.spring.forum.model.repository.CursoRepository;
-import com.felipeshonorato.spring.forum.model.repository.TopicoRepository;
+import org.hibernate.validator.constraints.Length;
+
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class TopicoForm {
 
+    //Anotações abaixo são utilizadas para criar validações para campos atravez do validation
+    @NotNull @NotEmpty @Length(min=5)
     private String titulo;
     private String mensagem;
     private String nomeCurso;
