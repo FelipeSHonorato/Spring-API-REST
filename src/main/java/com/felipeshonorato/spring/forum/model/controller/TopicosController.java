@@ -8,6 +8,10 @@ import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import com.felipeshonorato.spring.forum.model.repository.CursoRepository;
 import com.felipeshonorato.spring.forum.model.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -16,7 +20,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 import java.util.Optional;
 
 @RestController //Anotação para informar que essa classe é um controller do tipo rest onde não será direcionada para uma página tradicional de view.
@@ -35,16 +38,20 @@ public class TopicosController {
     // @RequestMapping("/topicos") //Esssa anotação poderia ser utilizada por métodos também porem abre a possibilidade de ambiguidade com outro método que responde na msm url
     // @ResponseBody //Anotação para avisar ao Spring que a navegação não será para uma página tradicional de view
     @GetMapping //Informa que dentro de /topicos esse método será utilizando o GET
-    public List<TopicoDto> lista(String nomeCurso){
+    public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, @PageableDefault(sort="id", direction = Sort.Direction.DESC, page =0, size =10) Pageable paginacao){
 
         if (nomeCurso == null){
-            List<Topico>topicos = topicoRepository.findAll();
+            Page<Topico> topicos = topicoRepository.findAll(paginacao);
             return TopicoDto.converter(topicos);
         }else{
-            List<Topico>topicos = topicoRepository.findByCurso_Nome(nomeCurso);
+            Page<Topico>topicos = topicoRepository.findByCurso_Nome(nomeCurso, paginacao);
             return TopicoDto.converter(topicos);
         }
     }
+
+    /** Exemplo de url para ser chamado a paginação com base nos ID e Data da Criacao e os dois em ascendente
+     * http://localhost:8080/topicos?page=0&size=10&sort=id,asc&sort=dataCriacao,asc
+     * **/
 
     //@Validation para avisar o Spring que existem campos com validações a serem feitas.
     //@RequestBody informa ao Spring que os dados irão ser enviado através do corpo e não da barra de navegação como acontece em GET
