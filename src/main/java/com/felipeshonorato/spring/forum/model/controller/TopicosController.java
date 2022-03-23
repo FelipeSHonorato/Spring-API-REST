@@ -8,6 +8,8 @@ import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import com.felipeshonorato.spring.forum.model.repository.CursoRepository;
 import com.felipeshonorato.spring.forum.model.repository.TopicoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -38,6 +40,7 @@ public class TopicosController {
     // @RequestMapping("/topicos") //Esssa anotação poderia ser utilizada por métodos também porem abre a possibilidade de ambiguidade com outro método que responde na msm url
     // @ResponseBody //Anotação para avisar ao Spring que a navegação não será para uma página tradicional de view
     @GetMapping //Informa que dentro de /topicos esse método será utilizando o GET
+    @Cacheable(value="listaDeTopicos") // Adicionada a anotação @Cacheable para dizer que nessa consulta será utilizado o cache e com nome de "listaDeTopicos"
     public Page<TopicoDto> lista(@RequestParam(required = false) String nomeCurso, @PageableDefault(sort="id", direction = Sort.Direction.DESC, page =0, size =10) Pageable paginacao){
 
         if (nomeCurso == null){
@@ -57,6 +60,8 @@ public class TopicosController {
     //@RequestBody informa ao Spring que os dados irão ser enviado através do corpo e não da barra de navegação como acontece em GET
     @PostMapping //Informa que dentro de /topicos esse método será utilizando o POST
     @Transactional //Quando o método for efetuar alguma modificação no BD deve-se utilizar essa anotação (PUT, DELETE ou POST)
+    @CacheEvict (value = "listaDeTopicos", allEntries = true)
+    //Anotação que "limpa" o cache criado ao usuário, para dizer que aqueles dados cacheados foram alterados no sistema. AllEntries limpa todos os dados cacheados.
     public ResponseEntity<TopicoDto> cadastrar(@RequestBody @Valid TopicoForm topicoForm, UriComponentsBuilder uriComponentsBuilder){
         Topico topico = topicoForm.converter(cursoRepository);
         topicoRepository.save(topico);
@@ -80,6 +85,7 @@ public class TopicosController {
 
     @PutMapping("/{id}")
     @Transactional
+    @CacheEvict (value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoForm topicoForm){
 
         Optional<Topico> optional = topicoRepository.findById(id);
@@ -94,6 +100,7 @@ public class TopicosController {
 
     @DeleteMapping("/{id}")
     @Transactional
+    @CacheEvict (value = "listaDeTopicos", allEntries = true)
     public ResponseEntity<?> remover(@PathVariable Long id){
 
         Optional<Topico> optional = topicoRepository.findById(id);
