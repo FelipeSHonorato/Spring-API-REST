@@ -1,4 +1,4 @@
-package com.felipeshonorato.spring.forum.model.config.validacao;
+package com.felipeshonorato.spring.forum.model.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
