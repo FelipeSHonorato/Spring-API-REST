@@ -1,5 +1,7 @@
 package com.felipeshonorato.spring.forum.model.config.security;
 
+import com.felipeshonorato.spring.forum.model.modelo.Usuario;
+import com.felipeshonorato.spring.forum.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,10 +14,17 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TokenService tokenService;
 
     @Autowired
     private AutenticacaoService autenticacaoService;
@@ -42,7 +51,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .anyRequest().authenticated() //Informa que todos as outras urls necessitam de autenticação
                 .and().csrf().disable() //CSRF => cross-site request forgery, é um tipo de ataque hacker que acontece nas aplicações web
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS); //Informa que a autenticação será via stateless
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Informa que a autenticação será via stateless
+                .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class); //Solicita ao Spring que faça uma autenticação antes com o token do usuário
     }
 
     //Método que efetua a configurações de recursos estáticos (js, css, imagens...)
