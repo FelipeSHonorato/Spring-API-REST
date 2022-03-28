@@ -1,4 +1,4 @@
-package com.felipeshonorato.spring.forum.model.dto;
+package com.felipeshonorato.spring.forum.model.controller.dto;
 
 import com.felipeshonorato.spring.forum.model.modelo.Resposta;
 

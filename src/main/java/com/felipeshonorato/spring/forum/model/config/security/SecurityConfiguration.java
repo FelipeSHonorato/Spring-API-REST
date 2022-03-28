@@ -1,6 +1,5 @@
 package com.felipeshonorato.spring.forum.model.config.security;
 
-import com.felipeshonorato.spring.forum.model.modelo.Usuario;
 import com.felipeshonorato.spring.forum.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -46,9 +45,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                //.anyRequest().permitAll()
                 .antMatchers(HttpMethod.GET,"/topicos").permitAll() //Libera acesso via Get para todos da url topicos
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll() //Libera acesso via Get para todos da url topicos mais outra coisa
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
+                .antMatchers(HttpMethod.GET, "/actuator/**").permitAll() //Libera acesso ao monitoramento da API
                 .anyRequest().authenticated() //Informa que todos as outras urls necessitam de autenticação
                 .and().csrf().disable() //CSRF => cross-site request forgery, é um tipo de ataque hacker que acontece nas aplicações web
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Informa que a autenticação será via stateless
@@ -56,8 +57,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     //Método que efetua a configurações de recursos estáticos (js, css, imagens...)
+    //Esse método através da Web.ignoring irá liberar o acesso do swagger para criar documentação da API
     @Override
     public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/**.html", "/v2/api-docs", "/webjars/**", "/configuration/**", "/swagger-resources/**");
     }
 
 }

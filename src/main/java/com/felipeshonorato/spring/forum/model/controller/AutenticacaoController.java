@@ -2,7 +2,7 @@ package com.felipeshonorato.spring.forum.model.controller;
 
 import com.felipeshonorato.spring.forum.model.config.security.TokenService;
 import com.felipeshonorato.spring.forum.model.controller.form.LoginForm;
-import com.felipeshonorato.spring.forum.model.dto.TokenDto;
+import com.felipeshonorato.spring.forum.model.controller.dto.TokenDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

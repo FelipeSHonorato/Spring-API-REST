@@ -1,4 +1,4 @@
-package com.felipeshonorato.spring.forum.model.config;
+package com.felipeshonorato.spring.forum.model.config.validacao;
 
 public class ErroDeFormularioDto {
 

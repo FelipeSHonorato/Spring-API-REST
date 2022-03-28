@@ -14,7 +14,9 @@ public class TopicoForm {
     //Anotações abaixo são utilizadas para criar validações para campos atravez do validation
     @NotNull @NotEmpty @Length(min=5)
     private String titulo;
+    @NotNull @NotEmpty @Length(min=10)
     private String mensagem;
+    @NotNull @NotEmpty
     private String nomeCurso;
 
     public String getTitulo() {

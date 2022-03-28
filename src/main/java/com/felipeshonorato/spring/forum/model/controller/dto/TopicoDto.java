@@ -1,11 +1,9 @@
-package com.felipeshonorato.spring.forum.model.dto;
+package com.felipeshonorato.spring.forum.model.controller.dto;
 
 import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class TopicoDto {
 

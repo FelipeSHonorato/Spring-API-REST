@@ -2,8 +2,8 @@ package com.felipeshonorato.spring.forum.model.controller;
 
 import com.felipeshonorato.spring.forum.model.controller.form.AtualizacaoTopicoForm;
 import com.felipeshonorato.spring.forum.model.controller.form.TopicoForm;
-import com.felipeshonorato.spring.forum.model.dto.DetalhesDoTopicoDto;
-import com.felipeshonorato.spring.forum.model.dto.TopicoDto;
+import com.felipeshonorato.spring.forum.model.controller.dto.DetalhesDoTopicoDto;
+import com.felipeshonorato.spring.forum.model.controller.dto.TopicoDto;
 import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import com.felipeshonorato.spring.forum.model.repository.CursoRepository;
 import com.felipeshonorato.spring.forum.model.repository.TopicoRepository;
