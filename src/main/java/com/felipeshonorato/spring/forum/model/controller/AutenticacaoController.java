@@ -17,7 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
-@Profile("prod") //Anotação para informar ao Spring que essa classe tem que ser carregada somente durante o processo de produção
+@Profile(value = {"prod", "test"}) //Anotação para informar ao Spring que essa classe tem que ser carregada somente durante o processo de produção
 public class AutenticacaoController {
 
     @Autowired
