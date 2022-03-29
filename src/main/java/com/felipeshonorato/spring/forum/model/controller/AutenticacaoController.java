@@ -4,6 +4,7 @@ import com.felipeshonorato.spring.forum.model.config.security.TokenService;
 import com.felipeshonorato.spring.forum.model.controller.form.LoginForm;
 import com.felipeshonorato.spring.forum.model.controller.dto.TokenDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -16,6 +17,7 @@ import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/auth")
+@Profile("prod") //Anotação para informar ao Spring que essa classe tem que ser carregada somente durante o processo de produção
 public class AutenticacaoController {
 
     @Autowired
