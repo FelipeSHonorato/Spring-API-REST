@@ -50,6 +50,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/topicos/*").permitAll() //Libera acesso via Get para todos da url topicos mais outra coisa
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.GET, "/actuator/**").permitAll() //Libera acesso ao monitoramento da API
+                .antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("MODERADOR")//Libera a opção de delete somente para quem é moderador
                 .anyRequest().authenticated() //Informa que todos as outras urls necessitam de autenticação
                 .and().csrf().disable() //CSRF => cross-site request forgery, é um tipo de ataque hacker que acontece nas aplicações web
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Informa que a autenticação será via stateless

@@ -2,17 +2,17 @@ package com.felipeshonorato.spring.forum.model.controller.form;
 
 import com.felipeshonorato.spring.forum.model.modelo.Topico;
 import com.felipeshonorato.spring.forum.model.repository.TopicoRepository;
-import org.hibernate.validator.constraints.Length;
+
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class AtualizacaoTopicoForm {
 
-    @NotNull @NotEmpty @Length(min=5)
+    @NotNull @NotEmpty
     private String titulo;
 
-    @NotNull @NotEmpty @Length(min=5)
+    @NotNull @NotEmpty
     private String mensagem;
 
     public String getTitulo() {
