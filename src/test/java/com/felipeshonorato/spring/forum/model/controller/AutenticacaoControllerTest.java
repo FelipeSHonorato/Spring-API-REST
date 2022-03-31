@@ -17,7 +17,7 @@ import java.net.URI;
 
 @ActiveProfiles("test")
 @RunWith(SpringRunner.class) //Anotação para ele carregar todo o sistema para efetuar um teste real
-@AutoConfigureMockMvc //Anotação para ativar o MockMVC na classe de teste
+@AutoConfigureMockMvc //Anotação para ativar o MockMVC na classe de test
 @SpringBootTest
 public class AutenticacaoControllerTest {
 
